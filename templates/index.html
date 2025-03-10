@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniture Placement AI</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6994d1;
+            --accent-color: #28a745;
+            --accent-hover: #218838;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-radius: 10px;
+            --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ebf4f5 0%, #b5c6e0 100%);
+            background-attachment: fixed;
+            color: var(--text-color);
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a6fa5' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+        }
+        
+        .page-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .header-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        form {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: left;
+            width: 320px;
+            transition: transform 0.3s ease;
+        }
+        
+        form:hover {
+            transform: translateY(-5px);
+        }
+        
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 15px;
+            color: var(--primary-color);
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(106, 148, 209, 0.2);
+        }
+        
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            margin-top: 25px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 6px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .output {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: left;
+            max-width: 500px;
+            transition: transform 0.3s ease;
+        }
+        
+        .output:hover {
+            transform: translateY(-5px);
+        }
+        
+        .error {
+            color: #dc3545;
+            background-color: #f8d7da;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin: 20px auto;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+        }
+        
+        img {
+            margin-top: 20px;
+            max-width: 100%;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dimensions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .dimension-item {
+            background-color: #e7f1ff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .coordinates {
+            background-color: #e9f7ef;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .coordinate-value {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        .note {
+            font-style: italic;
+            color: #6c757d;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            form, .output {
+                width: 100%;
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <header>
+            <h1>Furniture Placement Optimizer</h1>
+            <p class="header-subtitle">Find the perfect spot for your furniture using our advanced placement algorithm</p>
+        </header>
+        
+        {% if error is defined %}
+            <div class="error">
+                <strong>Error:</strong> {{ error }}
+            </div>
+        {% endif %}
+        
+        <div class="container">
+            <form action="/predict" method="POST">
+                <h2>Room & Furniture Dimensions</h2>
+                <label for="room_width">Room Width (units):</label>
+                <input type="number" id="room_width" name="room_width" min="1" value="{{ room_width|default('') }}" required>
+                
+                <label for="room_height">Room Height (units):</label>
+                <input type="number" id="room_height" name="room_height" min="1" value="{{ room_height|default('') }}" required>
+                
+                <label for="furniture_width">Furniture Width (units):</label>
+                <input type="number" id="furniture_width" name="furniture_width" min="1" value="{{ furniture_width|default('') }}" required>
+                
+                <label for="furniture_height">Furniture Height (units):</label>
+                <input type="number" id="furniture_height" name="furniture_height" min="1" value="{{ furniture_height|default('') }}" required>
+                
+                <button type="submit">Calculate Optimal Placement</button>
+            </form>
+            
+            {% if x is defined and y is defined %}
+                <div class="output">
+                    <h2>Optimal Furniture Placement</h2>
+                    
+                    <div class="dimensions">
+                        <div class="dimension-item">Room: {{ room_width }}×{{ room_height }}</div>
+                        <div class="dimension-item">Furniture: {{ furniture_width }}×{{ furniture_height }}</div>
+                    </div>
+                    
+                    <h3>Recommended Position:</h3>
+                    <div class="coordinates">
+                        Place at coordinates <span class="coordinate-value">({{ x }}, {{ y }})</span>
+                    </div>
+                    
+                    <img src="{{ image_url }}" alt="Optimized Furniture Layout">
+                    
+                    <p class="note">Note: Coordinates represent the bottom-left corner of the furniture</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
