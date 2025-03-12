@@ -1,23 +1,35 @@
-# AI-Based Furniture Placement Optimizer
+# 🏠 AI-Based Furniture Placement Optimizer
 
-This project optimizes **furniture placement** in a room using AI.
+This project leverages **Artificial Intelligence (AI)** to **optimize furniture placement** within a room. Using **TensorFlow**, a **Neural Network (MLP)** predicts the best position for furniture based on room size, furniture dimensions, and spatial constraints.
 
-## 🚀 Installation & Setup
+---
 
-```bash
-git clone https://github.com/naveennekkanti1/Furniture-Placement-AI.git
-cd Furniture-Placement-AI
-pip install -r requirements.txt
-python generate_dataset.py
-python train_model.py
-python app.py
-```
+## 🚀 Project Overview
+### **🛠️ Problem Statement**
+Arranging furniture efficiently in a limited space is challenging. People often struggle with finding the best placement that:
+- Maximizes available space
+- Avoids overcrowding or poor accessibility
+- Maintains functional aesthetics  
 
-## 🖥️ Deployment on Render
+This AI-powered optimizer **automates the process**, providing the best possible arrangement for a given furniture size and room dimensions.
 
-1. Push the project to **GitHub**
-2. Connect GitHub repo to **Render**
-3. Set Python version to **3.9+**
-4. Click **Deploy**
+### **🤖 How It Works**
+1. **User Inputs:** Room width & height, furniture dimensions  
+2. **AI Model Predicts:** The most optimal `(x, y)` coordinates  
+3. **Visualization:** The placement is **displayed as a 2D layout**  
+4. **Interactive UI:** Users enter values and get instant results  
 
-Access your app at: `https://your-app.onrender.com/`
+---
+
+## 🧠 AI Model Details
+### **📌 Model Type**
+- **Architecture:** Multi-Layer Perceptron (**MLP**)  
+- **Input Features:** `[Room Width, Room Height, Furniture Width, Furniture Height]`  
+- **Output:** `[Optimal X-Position, Optimal Y-Position]`  
+- **Activation Functions:**  
+  - **Hidden Layers:** ReLU  
+  - **Output Layer:** Linear  
+
+### **📊 Dataset**
+- **Synthetic Dataset Generated** (2,00,000 samples)  
+- **Data Columns:** (6 columns)
