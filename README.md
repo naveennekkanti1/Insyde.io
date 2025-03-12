@@ -33,3 +33,21 @@ This AI-powered optimizer **automates the process**, providing the best possible
 ### **📊 Dataset**
 - **Synthetic Dataset Generated** (2,00,000 samples)  
 - **Data Columns:** (6 columns)
+  
+- The dataset ensures **realistic furniture placement** within the room's bounds.
+
+### **🎯 Training Process**
+- **Loss Function:** Mean Squared Error (MSE)  
+- **Optimizer:** Adam  
+- **Epochs:** 50  
+- **Batch Size:** 32  
+- **Train-Test Split:** 90%-10%  
+
+---
+
+## 💻 Installation & Setup
+### **1️⃣ Clone the Repository**
+```bash
+git clone https://github.com/naveennekkanti1/Furniture-Placement-AI.git
+cd Furniture-Placement-AI
+
