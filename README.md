@@ -50,4 +50,8 @@ This AI-powered optimizer **automates the process**, providing the best possible
 ```bash
 git clone https://github.com/naveennekkanti1/Furniture-Placement-AI.git
 cd Furniture-Placement-AI
+pip install -r requirements.txt
+python train_model.py
+python app.py
+
 
